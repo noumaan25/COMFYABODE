@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Furniture Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="cart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1>COMFYABODE</h1>
+            <p>Home Furnishings & Comfort</p>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="index.html" onclick="showSection('kingcoil-section')">Kingcoil</a>
+            <a href="index.html" onclick="showSection('sleepwell-section')">Sleepwell</a>
+        </nav>
+        <div class="contact">
+            <p>Leading Supplier In India</p>
+            <p>Contact: +91 1234567890 | xyz@gmail.com</p>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search products">
+            <button class="cart-button" onclick="window.location.href='cart.html'">
+                <img src="homepageimages/shoppingcart.png" alt="Cart">
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="cart-section">
+            <h2>Your Cart</h2>
+            <div id="cart-items" class="products-grid">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-summary">
+                <h3>Total: ₹<span id="total-amount">0</span></h3>
+                <button class="checkout-button" onclick="goToAddressPage()">Next</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 COMFYABODE Home Furnishings & Comfort. All rights reserved.</p>
+        <a href="#" onclick="showSection('admin-login-section')" class="admin-login">Admin Login</a>
+    </footer>
+
+    <div id="payment-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span class="close" onclick="closePaymentPopup()">&times;</span>
+            <h2>Payment</h2>
+            <img src="images/payment.png" alt="Payment Image" class="payment-image">
+            <p>Your payment is being processed...</p>
+        </div>
+    </div>
+</body>
+</html>

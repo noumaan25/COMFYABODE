@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Furniture Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="payment.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1>COMFYABODE</h1>
+            <p>Home Furnishings & Comfort</p>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="index.html" onclick="showSection('kingcoil-section')">Kingcoil</a>
+            <a href="index.html" onclick="showSection('sleepwell-section')">Sleepwell</a>
+        </nav>
+        <div class="contact">
+            <p>Leading Supplier In India</p>
+            <p>Contact: +91 1234567890 | xyz@gmail.com</p>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search products">
+            <button class="cart-button" onclick="window.location.href='cart.html'">
+                <img src="homepageimages/shoppingcart.png" alt="Cart">
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section id="payment-section">
+            <div class="payment-container">
+                <div class="terms">
+                    <h2>Terms and Conditions</h2>
+                    <p>By proceeding with this payment, you agree to our terms and conditions. Please review them carefully.</p>
+                    <ul>
+                        <li>All sales are final. No refunds or exchanges will be accepted.</li>
+                        <li>Products will be shipped within 7-10 business days.</li>
+                        <li>Customer is responsible for providing accurate shipping information.</li>
+                        <li>Warranty claims are subject to product evaluation and approval.</li>
+                        <li>Additional terms and conditions may apply.</li>
+                    </ul>
+                </div>
+                <div class="payment-image">
+                    <img src="qr.png" alt="Payment Image">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 COMFYABODE Home Furnishings & Comfort. All rights reserved.</p>
+        <a href="#" onclick="showSection('admin-login-section')" class="admin-login">Admin Login</a>
+    </footer>
+
+    <!-- Popup -->
+    <div id="success-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your purchase. You will be redirected to the homepage shortly.</p>
+        </div>
+    </div>
+</body>
+</html>

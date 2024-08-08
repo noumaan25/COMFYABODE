@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Slideshow 
+        let slideIndex = 0;
+        function showSlides() {
+            const slides = document.querySelectorAll(".slide");
+            slides.forEach(slide => slide.style.display = "none");
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 4000); // Change image every 3 seconds
+        }
+
+        //previous slide
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlidesManual();
+        }
+
+        function showSlidesManual() {
+            const slides = document.querySelectorAll(".slide");
+            slides.forEach(slide => slide.style.display = "none");
+            if (slideIndex > slides.length) {slideIndex = 1}
+            if (slideIndex < 1) {slideIndex = slides.length}
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        // Function to show the specified section and hide others
+        function showSection(sectionId) {          
+            const sections = document.querySelectorAll('.main-content > section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.style.display = 'block';
+            }
+        }
+
+        // Navigate to login if not authenticated
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem('currentUser')) {
+                showSection('home-section');
+            } else {
+                showSection('home-section'); // Show home section by default
+            }
+
+            // Check if admin is logged in
+            if (localStorage.getItem('adminLoggedIn')) {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('admin-panel').style.display = 'block';
+            }
+
+            showSlides(); // Start the slideshow
+        });
+        // index.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing slideshow and admin logic...
+    showSlides();
+
+    // Add event listeners to add-to-cart buttons
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productCard = this.closest('.product-card');
+            const productName = productCard.querySelector('.product-info h3').textContent;
+            const productPriceText = productCard.querySelector('.product-info p').textContent;
+            const productPrice = parseFloat(productPriceText.match(/₹(\d+)/)[1]);
+            const productImage = productCard.querySelector('img').src;
+
+            addToCart(productName, productPrice, productImage);
+        });
+    });
+});
+
+function addToCart(name, price, image) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    const existingItem = cartItems.find(item => item.name === name);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cartItems.push({ name, price, image, quantity: 1 });
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    alert('Product added to cart!');
+}
+
+
+        // Function to handle admin login
+        function adminLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check credentials
+            if (username === 'ahmed' && password === 'ahmed1') {
+                localStorage.setItem('adminLoggedIn', true);
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('admin-panel').style.display = 'block';
+            } else {
+                alert('Incorrect username or password');
+            }
+        }
+
+        // Function to logout admin
+        function adminLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1>COMFYABODE</h1>
+            <p>Home Furnishings & Comfort</p>
+        </div>
+        <nav class="nav">
+            <a href="#" onclick="showSection('home-section')">Home</a>
+            <a href="#" onclick="showSection('kingcoil-section')">Kingcoil</a>
+            <a href="#" onclick="showSection('sleepwell-section')">Sleepwell</a>
+        </nav>
+        <div class="contact">
+            <p>Leading Supplier In India</p>
+            <p>Contact: +91 1234567890 | xyz@gmail.com</p>
+        </div>
+<div class="search-bar">
+    <input type="text" placeholder="Search products">
+    <button class="cart-button">
+        <a href="cart.html">
+            <img src="homepageimages/shoppingcart.png" alt="Cart">
+        </a>
+    </button>
+</div>
+    </header>
+
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home-section">
+            <div class="banner">
+                <div class="slide">
+                    <img src="bannerimages/kingcoilbanner.jpg" alt="Banner Image 1">
+                </div>
+                <div class="slide">
+                    <img src="bannerimages/sleepwell.png" alt="Banner Image 2">
+                </div>
+                <div class="slide">
+                    <img src="bannerimages/homepageimage.jpeg" alt="Banner Image 3">
+                </div>
+                <div class="slide">
+                    <img src="bannerimages/banner4.jpg.avif" alt="Banner Image 4">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <div class="banner-text">
+                    <h2>Dream Better. Sleep Better. Wake Refreshed</h2>
+                    <p>Looking for a personalized sleep experience? Customize your own mattress to perfectly suit your comfort and support needs!</p>
+                    <button class="customize-button">CUSTOMIZE NOW!</button>
+                </div>
+            </div>
+            <h2 class="products-title">Our Products</h2>
+            <div class="products-grid">
+                <!-- Kingcoil Products -->
+                <div class="product-card">
+                    <img src="kingimages/kingproduct1.png" alt="Dr Mattress Euro HR">
+                    <div class="product-info">
+                        <h3>Dr Mattress Euro HR</h3>
+                        <p>From MRP ₹5677/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="kingimages/kingproduct2.png" alt="Dr Mattress Euro Back">
+                    <div class="product-info">
+                        <h3>Dr Mattress Euro Back</h3>
+                        <p>From MRP ₹5674/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="kingimages/kingproduct3.png" alt="Chiropedic 3000">
+                    <div class="product-info">
+                        <h3>Chiropedic 3000</h3>
+                        <p>From MRP ₹7677/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="kingimages/kingproduct4.png" alt="Comfort Sense">
+                    <div class="product-info">
+                        <h3>Comfort Sense</h3>
+                        <p>From MRP ₹4221/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Sleepwell Products -->
+                <div class="product-card">
+                    <img src="sleepwellimages/sleepwellproduct1.png" alt="Dr Mattress Euro HR">
+                    <div class="product-info">
+                        <h3>Dr Mattress Euro HR</h3>
+                        <p>From MRP ₹5677/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="sleepwellimages/sleepwellproduct2.png" alt="Dr Mattress Euro Back">
+                    <div class="product-info">
+                        <h3>Dr Mattress Euro Back</h3>
+                        <p>From MRP ₹5674/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="sleepwellimages/sleepwellproduct3.png" alt="Chiropedic 3000">
+                    <div class="product-info">
+                        <h3>Chiropedic 3000</h3>
+                        <p>From MRP ₹7677/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="sleepwellimages/sleepwellproduct4.png" alt="Comfort Sense">
+                    <div class="product-info">
+                        <h3>Comfort Sense</h3>
+                        <p>From MRP ₹4221/- (Inc of all taxes)</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kingcoil Section -->
+        <section id="kingcoil-section" style="display: none;">
+            <div class="kingcoil-container">
+                <div class="hero-image">
+                    <img src="kingimages/mainimageking.png" alt="Hero Image">
+                </div>
+                <div class="products">
+                    <h2>Bestsellers by Kingcoil</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <img src="kingimages/kingproduct1.png" alt="Dr Mattress Euro HR">
+                            <div class="product-info">
+                                <h3>Dr Mattress Euro HR</h3>
+                                <p>From MRP ₹5677/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="kingimages/kingproduct2.png" alt="Dr Mattress Euro Back">
+                            <div class="product-info">
+                                <h3>Dr Mattress Euro Back</h3>
+                                <p>From MRP ₹5674/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="kingimages/kingproduct3.png" alt="Chiropedic 3000">
+                            <div class="product-info">
+                                <h3>Chiropedic 3000</h3>
+                                <p>From MRP ₹7677/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="kingimages/kingproduct4.png" alt="Comfort Sense">
+                            <div class="product-info">
+                                <h3>Comfort Sense</h3>
+                                <p>From MRP ₹4221/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="kingimages/kingproduct5.png" alt="NaturaBond">
+                            <div class="product-info">
+                                <h3>NaturaBond</h3>
+                                <p>From MRP ₹5621/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="kingimages/kingproduct6.png" alt="Paradise">
+                            <div class="product-info">
+                                <h3>Paradise</h3>
+                                <p>From MRP ₹6621/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sleepwell Section -->
+        <section id="sleepwell-section" style="display: none;">
+            <div class="sleepwell-container">
+                <div class="hero-image">
+                    <img src="sleepwellimages/sleepwellmain.png" alt="Hero Image">
+                </div>
+                <div class="products">
+                    <h2>Bestsellers by Sleepwell</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <img src="sleepwellimages/sleepwellproduct1.png" alt="Dr Mattress Euro HR">
+                            <div class="product-info">
+                                <h3>Dr Mattress Euro HR</h3>
+                                <p>From MRP ₹5677/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="sleepwellimages/sleepwellproduct2.png" alt="Dr Mattress Euro Back">
+                            <div class="product-info">
+                                <h3>Dr Mattress Euro Back</h3>
+                                <p>From MRP ₹5674/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="sleepwellimages/sleepwellproduct3.png" alt="Chiropedic 3000">
+                            <div class="product-info">
+                                <h3>Chiropedic 3000</h3>
+                                <p>From MRP ₹7677/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="sleepwellimages/sleepwellproduct4.png" alt="Comfort Sense">
+                            <div class="product-info">
+                                <h3>Comfort Sense</h3>
+                                <p>From MRP ₹4221/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="sleepwellimages/sleepwellproduct5.png" alt="NaturaBond">
+                            <div class="product-info">
+                                <h3>NaturaBond</h3>
+                                <p>From MRP ₹5621/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <img src="sleepwellimages/sleepwellproduct6.png" alt="Paradise">
+                            <div class="product-info">
+                                <h3>Paradise</h3>
+                                <p>From MRP ₹6621/- (Inc of all taxes)</p>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Login Section -->
+        <section id="admin-login-section" style="display: none;">
+            <form id="login-form" onsubmit="adminLogin(event)">
+                <h2>Admin Login</h2>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+            <div id="success-message" style="display: none;">
+                <h2>Successfully logged in!</h2>
+                <button onclick="adminLogout()">Logout</button>
+            </div>
+            <div id="admin-panel" style="display: none;">
+                <h2>Admin Panel</h2>
+                <p>Welcome to the admin panel. Here you can manage the store.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 COMFYABODE Home Furnishings & Comfort. All rights reserved.</p>
+        <a href="#" onclick="showSection('admin-login-section')" class="admin-login">Admin Login</a>
+    </footer>
+</body>
+</html>
